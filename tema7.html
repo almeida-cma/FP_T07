@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 07 - Procedimentos | Exemplos para Webportugol</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #94a3b8;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: #1e293b;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            padding: 20px;
+            color: white;
+        }
+
+        .card-header h2 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .definicao {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .card-header.ex1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-header.ex2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .card-header.ex3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .card-header.ex4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .card-header.ex5 { background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .codigo {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 15px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+
+        .codigo pre {
+            color: #e2e8f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .btn-copiar {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-copiar:hover {
+            background: #2563eb;
+            transform: scale(1.02);
+        }
+
+        .btn-copiado {
+            background: #10b981;
+        }
+
+        /* Resumo Teórico */
+        .resumo-teorico {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .resumo-teorico h3 {
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .conceitos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .conceito-card {
+            color: #b7e5e7;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 15px;
+            border-left: 4px solid;
+        }
+
+        .conceito-card h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .conceito-card p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+
+        .conceito-card.sem { border-left-color: #667eea; }
+        .conceito-card.com { border-left-color: #f5576c; }
+        .conceito-card.global { border-left-color: #4facfe; }
+        .conceito-card.local { border-left-color: #43e97b; }
+
+        .rodape {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .rodape h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .link {
+            background: #334155;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .link:hover {
+            background: #475569;
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Tema 07 - Procedimentos</h1>
+            <p>Definições, exemplos práticos e códigos prontos para Webportugol Studio</p>
+            <div class="badge">🎯 5 exemplos | Clique nos botões para copiar</div>
+        </div>
+
+        <!-- Resumo Teórico -->
+        <div class="resumo-teorico">
+            <h3>📖 O que são Procedimentos?</h3>
+            <div class="conceitos-grid">
+                <div class="conceito-card sem">
+                    <h4>🔹 Procedimento sem parâmetros</h4>
+                    <p>Executa uma tarefa específica sem receber dados externos. Basta chamar seu nome para executar.</p>
+                </div>
+                <div class="conceito-card com">
+                    <h4>🔹 Procedimento com parâmetros</h4>
+                    <p>Recebe valores (parâmetros) para trabalhar internamente, permitindo personalizar sua execução.</p>
+                </div>
+                <div class="conceito-card global">
+                    <h4>🔹 Variável Global</h4>
+                    <p>Declarada fora da função inicio(). Pode ser acessada e modificada por qualquer procedimento.</p>
+                </div>
+                <div class="conceito-card local">
+                    <h4>🔹 Variável Local</h4>
+                    <p>Declarada dentro de um procedimento. Existe apenas durante sua execução e é reiniciada a cada chamada.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <!-- EXEMPLO 1 - Procedimento sem parâmetros -->
+            <div class="card">
+                <div class="card-header ex1">
+                    <h2>📌 Exemplo 1 - Procedimento sem parâmetros</h2>
+                    <div class="definicao">🔹 Executa uma tarefa fixa. Não recebe dados. Basta chamar pelo nome.</div>
+                </div>
+                <div class="card-body">
+                    <div class="codigo">
+                        <pre id="codigo1">programa
+{
+    // Procedimento sem parâmetros
+    funcao vazio saudacao()
+    {
+        escreva("Olá! Bem-vindo ao programa!\n")
+    }
+    
+    funcao inicio()
+    {
+        saudacao()  // Chamada do procedimento
+    }
+}</pre>
+                    </div>
+                    <button class="btn-copiar" onclick="copiarCodigo('codigo1', this)">📋 Copiar código</button>
+                </div>
+            </div>
+
+            <!-- EXEMPLO 2 - Procedimento com parâmetros -->
+            <div class="card">
+                <div class="card-header ex2">
+                    <h2>📌 Exemplo 2 - Procedimento com parâmetros</h2>
+                    <div class="definicao">🔹 Recebe valores (parâmetros) para personalizar sua execução.</div>
+                </div>
+                <div class="card-body">
+                    <div class="codigo">
+                        <pre id="codigo2">programa
+{
+    // Procedimento com parâmetro
+    funcao vazio saudacaoPersonalizada(cadeia nome)
+    {
+        escreva("Olá, ", nome, "! Seja bem-vindo!\n")
+    }
+    
+    funcao inicio()
+    {
+        cadeia nomeUsuario
+        
+        escreva("Digite seu nome: ")
+        leia(nomeUsuario)
+        
+        saudacaoPersonalizada(nomeUsuario)
+    }
+}</pre>
+                    </div>
+                    <button class="btn-copiar" onclick="copiarCodigo('codigo2', this)">📋 Copiar código</button>
+                </div>
+            </div>
+
+            <!-- EXEMPLO 3 - Variável Global -->
+            <div class="card">
+                <div class="card-header ex3">
+                    <h2>📌 Exemplo 3 - Variável Global</h2>
+                    <div class="definicao">🔹 Variável declarada fora do inicio(). Pode ser alterada por qualquer procedimento.</div>
+                </div>
+                <div class="card-body">
+                    <div class="codigo">
+                        <pre id="codigo3">programa
+{
+    // Variável global
+    inteiro contador = 0
+    
+    // Procedimento que altera variável global
+    funcao vazio incrementar()
+    {
+        contador = contador + 1
+        escreva("Contador agora é: ", contador, "\n")
+    }
+    
+    funcao inicio()
+    {
+        escreva("Valor inicial: ", contador, "\n")
+        incrementar()
+        incrementar()
+        incrementar()
+    }
+}</pre>
+                    </div>
+                    <button class="btn-copiar" onclick="copiarCodigo('codigo3', this)">📋 Copiar código</button>
+                </div>
+            </div>
+
+            <!-- EXEMPLO 4 - Variável Local -->
+            <div class="card">
+                <div class="card-header ex4">
+                    <h2>📌 Exemplo 4 - Variável Local</h2>
+                    <div class="definicao">🔹 Variável declarada dentro do procedimento. É reiniciada a cada chamada.</div>
+                </div>
+                <div class="card-body">
+                    <div class="codigo">
+                        <pre id="codigo4">programa
+{
+    // Procedimento com variável local
+    funcao vazio incrementarLocal()
+    {
+        inteiro contadorLocal = 0
+        
+        contadorLocal = contadorLocal + 1
+        escreva("Valor local: ", contadorLocal, "\n")
+    }
+    
+    funcao inicio()
+    {
+        incrementarLocal()  // Mostra 1
+        incrementarLocal()  // Mostra 1 (sempre reinicia)
+        incrementarLocal()  // Mostra 1
+    }
+}</pre>
+                    </div>
+                    <button class="btn-copiar" onclick="copiarCodigo('codigo4', this)">📋 Copiar código</button>
+                </div>
+            </div>
+
+            <!-- EXEMPLO 5 - Sistema Bancário Completo -->
+            <div class="card">
+                <div class="card-header ex5">
+                    <h2>📌 Exemplo 5 - Sistema Bancário</h2>
+                    <div class="definicao">🔹 Aplicação prática com múltiplos procedimentos e menu interativo.</div>
+                </div>
+                <div class="card-body">
+                    <div class="codigo">
+                        <pre id="codigo5">programa
+{
+    funcao vazio limparTela()
+    {
+        limpa()
+    }
+    
+    funcao vazio exibirMenu()
+    {
+        limparTela()
+        escreva("================================\n")
+        escreva("      SISTEMA BANCÁRIO         \n")
+        escreva("================================\n")
+        escreva("1 - SALDO\n")
+        escreva("2 - EXTRATO\n")
+        escreva("3 - EMPRÉSTIMO\n")
+        escreva("0 - SAIR\n")
+        escreva("================================\n")
+        escreva("Escolha: ")
+    }
+    
+    funcao vazio exibirSaldo()
+    {
+        limparTela()
+        escreva("========== SALDO ==========\n")
+        escreva("Saldo atual: R$ 2.547,89\n")
+        escreva("\nPressione ENTER...")
+        cadeia pausa
+        leia(pausa)
+    }
+    
+    funcao vazio exibirExtrato()
+    {
+        limparTela()
+        escreva("========== EXTRATO ==========\n")
+        escreva("15/03 - Compra     - R$ 347,50\n")
+        escreva("12/03 - Pagamento  - R$ 129,90\n")
+        escreva("10/03 - Saque      - R$ 200,00\n")
+        escreva("\nPressione ENTER...")
+        cadeia pausa
+        leia(pausa)
+    }
+    
+    funcao vazio exibirEmprestimo()
+    {
+        limparTela()
+        escreva("========== EMPRÉSTIMO ==========\n")
+        escreva("Procure sua agência para liberação.\n")
+        escreva("\nPressione ENTER...")
+        cadeia pausa
+        leia(pausa)
+    }
+    
+    funcao inicio()
+    {
+        inteiro opcao
+        
+        faca
+        {
+            exibirMenu()
+            leia(opcao)
+            
+            se (opcao == 1)
+            {
+                exibirSaldo()
+            }
+            senao se (opcao == 2)
+            {
+                exibirExtrato()
+            }
+            senao se (opcao == 3)
+            {
+                exibirEmprestimo()
+            }
+            senao se (opcao == 0)
+            {
+                limparTela()
+                escreva("Sistema encerrado!\n")
+            }
+            senao
+            {
+                escreva("\nOpção inválida! Digite 0-3\n")
+                cadeia pausa
+                leia(pausa)
+            }
+        } enquanto (opcao != 0)
+    }
+}</pre>
+                    </div>
+                    <button class="btn-copiar" onclick="copiarCodigo('codigo5', this)">📋 Copiar código</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rodapé com Links -->
+        <div class="rodape">
+            <h3>🔗 Links Úteis</h3>
+            <div class="links">
+                <a href="https://portugol.dev/" class="link" target="_blank">🌐 Webportugol Studio</a>
+                <a href="https://forms.gle/QvYjXnrAenbMSyTR8" class="link" target="_blank" style="background:#ef4444;">🆘 Solicitar Suporte</a>
+                <a href="https://forms.gle/T9QSe3PyEpru3t538" class="link" target="_blank" style="background:#10b981;">📤 Envio de Atividades</a>
+            </div>
+            <p style="color: #94a3b8; margin-top: 20px; font-size: 0.8rem;">
+                📚 Tema 07 - Procedimentos | Compatível com Webportugol Studio
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function copiarCodigo(elementoId, botao) {
+            const codigoElement = document.getElementById(elementoId);
+            const codigo = codigoElement.innerText;
+            
+            navigator.clipboard.writeText(codigo).then(function() {
+                const textoOriginal = botao.innerText;
+                botao.innerText = '✅ Copiado!';
+                botao.classList.add('btn-copiado');
+                
+                setTimeout(function() {
+                    botao.innerText = textoOriginal;
+                    botao.classList.remove('btn-copiado');
+                }, 2000);
+            }).catch(function() {
+                alert('Erro ao copiar. Selecione manualmente.');
+            });
+        }
+    </script>
+</body>
+</html>
